@@ -20,7 +20,6 @@ def runge_katta_coupled(coupled_funcs , inital_state , tf , ti , dt = 100 , non_
     if non_de_starting_index == 0 :
         for i in tqdm(range(num_steps), desc="Simulation Progress"):  # Iterates the runge katta 4th order method across the x,t arrays
             x_iter , t_iter = x_space[: , i] , t_space[i]
-            # print(x_iter)
             k1 = h * coupled_funcs(x_iter , t_iter)
             k2 = h * coupled_funcs(x_iter + (1 / 2) * k1 , t_iter + (1 / 2) * h)
             k3 = h * coupled_funcs(x_iter + (1 / 2) * k2 , t_iter + (1 / 2) * h)
@@ -29,10 +28,8 @@ def runge_katta_coupled(coupled_funcs , inital_state , tf , ti , dt = 100 , non_
 
             x_space[: , i + 1] = x_iter + rk
     else :
-        for i in tqdm(range(num_steps), desc="Simulation Progress"):  # Iterates the runge katta 4th order method across the x,t arrays
+        for i in tqdm(range(num_steps), desc="Simulation Progress"):  # Iterates the runge katta 4th order method across the x,t arrays taking into account non DE equations, not a generalized method yet
             x_iter , t_iter = x_space[: , i] , t_space[i]
-            #test = coupled_funcs((x_iter[:non_de_starting_index]),t_iter)
-            #print(coupled_funcs((x_iter[:non_de_starting_index]),t_iter))
             k1 = h * coupled_funcs(x_iter[:non_de_starting_index] , t_iter)
             k2 = h * coupled_funcs(x_iter[:non_de_starting_index] + (1 / 2) * k1[:non_de_starting_index] , t_iter + (1 / 2) * h)
             k3 = h * coupled_funcs(x_iter[:non_de_starting_index] + (1 / 2) * k2[:non_de_starting_index] , t_iter + (1 / 2) * h)

@@ -13,7 +13,7 @@ t_f , d_t = 10 , .01
 def x_2dot() :
     return -mu * g
 
-
+#
 def second_order_solver(func , initial_velocity , tf , target_distance , dt = 0.01) :
     steps = int(tf / dt)
     O = np.zeros((3 , steps))  # Array to hold acceleration, velocity, and position
@@ -31,6 +31,7 @@ def second_order_solver(func , initial_velocity , tf , target_distance , dt = 0.
     return final_position , O[1 , i]
 
 
+# shooting method
 v1 , v2 = initial_velocity_guess
 while abs(v1 - v2) > tolerance :
     v_next = (v1 + v2) / 2
